@@ -3,22 +3,15 @@
 L.Control.Geocoder.AddOk = L.Class.extend({
 	options: {
 		serviceUrl: 'http://api-adresse.data.gouv.fr',
+		limit: 6,
 		htmlTemplate: function(r) {
 			var parts = [];
 
-			/*
-			if (a.city || a.town || a.village) {
-				parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '') +
-					'">{} {postcode} {city} {town} {village}</span>');
-			}
-
-			if (a.state || a.country) {
-				parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-context' : '') +
-					'">{state} {country}</span>');
-			}
+			/* some available classes:
+				leaflet-control-geocoder-address-detail
+				leaflet-control-geocoder-address-context
 			*/
 			parts.push('{label}');
-
 			parts.push('<span class="' + (parts.length > 0 ? 'leaflet-control-geocoder-address-detail' : '') +
 					'">{type}: {postcode} {city}</span>');
 
@@ -32,8 +25,10 @@ L.Control.Geocoder.AddOk = L.Class.extend({
 	},
 
 	geocode: function(query, cb, context) {
+
 		var params = L.extend({
 			q: query,
+			limit: this.options.limit
 		}, this.options.geocodingQueryParams);
 		var that = this ;
 		L.Control.Geocoder.getJSON(this.options.serviceUrl+'/search/', params, function(data) {

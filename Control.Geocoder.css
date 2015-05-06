@@ -85,7 +85,8 @@
 
 ul.leaflet-control-geocoder-alternatives {
 	width: 260px;
-	overflow: hidden;
+	overflow: auto;
+	height: 220px;
   	text-overflow: ellipsis;
   	white-space: nowrap;
   	list-style: none;
@@ -95,7 +96,7 @@ ul.leaflet-control-geocoder-alternatives {
 
 .leaflet-control-geocoder-alternatives-minimized {
 	width: 0 !important;
-	height: 0;
+	height: 0 !important;
 	overflow: hidden;
 	margin: 0;
 	padding: 0;
