@@ -24,10 +24,12 @@
 	</style>
 </head>
 <body>
+	<p>Search with AddOk</p>
+	<p>You can click the map then drag the red marker</p>
 	<div id="map"></div>
 
 	<script type="text/javascript">
-		var map = L.map('map').setView([0, 0], 2),
+		var map = L.map('map').setView([47.37760, 0.67961], 17),
 			//geocoder = new L.Control.Geocoder.addok(),
 			geocoder = new L.Control.Geocoder.addok( {limit: 10 } ),
 			//geocoder = new L.Control.Geocoder.addok( {geocodingQueryParams:{postcode: '37000'}} ),
@@ -35,6 +37,10 @@
 				geocoder: geocoder
 			}).addTo(map),
 			marker;
+
+			iconRed  = new L.Icon.Default({
+				iconUrl: './marker01-red.png'
+			});
 
 		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 		    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -50,11 +56,20 @@
 							setPopupContent(r.html || r.name).
 							openPopup();
 					} else {
-						marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
+						marker = L.marker(r.center, {icon: iconRed, draggable: true}).bindPopup(r.name).addTo(map).openPopup();
+						marker.on('dragend', function(e){
+							geocoder.reverse(e.target.getLatLng(), map.options.crs.scale(map.getZoom()), function(results) {
+								var r = results[0];
+								if (r) {
+									e.target.setPopupContent(r.html || r.name).togglePopup();
+								}
+							});
+						});
 					}
 				}
 			})
 		})
+
 	</script>
 </body>
 </html>
