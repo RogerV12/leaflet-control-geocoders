@@ -1,56 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet Control Geocoder</title>
+	<title>Leaflet Control Geocoder Demo</title>
 
   <meta name='viewport' content='width=device-width, user-scalable=no initial-scale=1, maximum-scale=1'>
 
-	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-	<link rel="stylesheet" href="../Control.Geocoder.css" />
-
-	<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet-src.js"></script>
-	<script src="../Control.Geocoder.js"></script>
 	<style type="text/css">
 		body {
 			margin: 0;
 		}
-		#map {
-			position: absolute;
-			width: 100%;
-			height: 100%;
-		}
 	</style>
 </head>
 <body>
-	<div id="map"></div>
+<h1>Leaflet Control Geocoder Demo</h1>
 
-	<script type="text/javascript">
-		var map = L.map('map').setView([0, 0], 2),
-			geocoder = L.Control.Geocoder.nominatim(),
-			control = L.Control.geocoder({
-				geocoder: geocoder
-			}).addTo(map),
-			marker;
+<p><a href="https://github.com/perliedman/leaflet-control-geocoder">Leaflet-control-geocoder</a> is a simple geocoder form to locate places. Easily extended to multiple data providers. </p>
 
-		L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-		    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-		}).addTo(map);
+<p>Here are ready to run demonstrations for searching with:</p>
+<ul>
+<li><a href="demo-nominatim.html">Nominatim</a></li>
+<li><a href="demo-bing.html">Bing</a></li>
+<li><a href="demo-google.html">Google</a></li>
+<li><a href="demo-photon.html">Photon</a></li>
+<li><a href="demo-addok.html">AddOk</a></li>
+</ul>
 
-		map.on('click', function(e) {
-			geocoder.reverse(e.latlng, map.options.crs.scale(map.getZoom()), function(results) {
-				var r = results[0];
-				if (r) {
-					if (marker) {
-						marker.
-							setLatLng(r.center).
-							setPopupContent(r.html || r.name).
-							openPopup();
-					} else {
-						marker = L.marker(r.center).bindPopup(r.name).addTo(map).openPopup();
-					}
-				}
-			})
-		})
-	</script>
+<p>Those demo does not work asis, they need configuration keys:</p>
+<ul>
+<li><a href="demo-ravegeo.html">RaveGeo</a> - need some configuration</li>
+<li><a href="demo-mapquest.html">MapQuest</a> - need a api key</li>
+<li><a href="demo-mapbox.html">Mapbox</a> - need access token</li>
+</ul>
+
 </body>
 </html>
